@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import AddMovie from './Components/Addmovie/AddMovie'
+import MovieList from './Components/MovieList/MovieList'
+import Search from './Components/SearchMovie/Search'
+import {movies} from './data/MovieData'
+import Home from './Components/Home';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+const App = () => {
+  
+  const [ListMovie,setListMovie]=useState(movies)
+        
+const handelAddMovie=(newMovie)=>{
+setListMovie(
+  [...ListMovie,newMovie]
+)
 }
 
-export default App;
+
+
+const [nameSearch,setNAmeSearch]=useState('')
+
+  return (
+    <div>
+     
+      <Search  setNAmeSearch={setNAmeSearch} />
+
+
+      <MovieList ListMovie={ListMovie}  nameSearch={nameSearch}/>
+
+      <hr/>
+      
+      <AddMovie  handelAddMovie={handelAddMovie}/>
+
+      <Home></Home>
+      
+      <Routes>
+        <Route path="/movies" element={<MovieList movieList={ MovieList} handelAddMovie={handelAddMovie}></MovieList>} />
+       
+  
+      </Routes>
+    
+    </div>
+    
+  )
+}
+
+export default App
